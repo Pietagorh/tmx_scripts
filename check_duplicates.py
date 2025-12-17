@@ -6,7 +6,7 @@ from os.path import exists
 import requests
 
 
-DUPLICATES_FILE = "./uid_table.json"
+UID_TABLE_FILE = "./uid_table.json"
 ONLY_PRINT_UNFINISHED = True
 
 
@@ -18,10 +18,10 @@ def open_uid_table() -> (UIdTable, int | None):
     """
     Opens potential existing table
     """
-    if not exists(DUPLICATES_FILE):
+    if not exists(UID_TABLE_FILE):
         return {}, None
 
-    with open(DUPLICATES_FILE, "r", encoding="utf-8") as f:
+    with open(UID_TABLE_FILE, "r", encoding="utf-8") as f:
         res = json.loads(f.read())
 
     return res["Table"], res["LastTrackId"]
@@ -31,7 +31,7 @@ def save_uid_table(table: UIdTable, last_track_id: int):
     """
     Saves table
     """
-    with open(DUPLICATES_FILE, "w", encoding="utf-8") as f:
+    with open(UID_TABLE_FILE, "w", encoding="utf-8") as f:
         f.write(json.dumps({"Table": table, "LastTrackId": last_track_id}, indent=4))
 
 

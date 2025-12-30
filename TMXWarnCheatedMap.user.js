@@ -11,6 +11,7 @@
 // @icon         https://account.mania.exchange/img/logos/TMNF.png
 // @downloadURL  https://update.greasyfork.org/scripts/560758/TMXWarnCheatedMap.user.js
 // @updateURL    https://update.greasyfork.org/scripts/560758/TMXWarnCheatedMap.user.js
+// @license      AGPL-3.0
 // ==/UserScript==
 
 const SHEET_ID = '1fqmzFGPIFBlJuxlwnPJSh1nCTTxqWXtHtvP5OUxE4Ow';

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         TMXWarnCheatedMap
 // @namespace    mailto:pietagorhh@proton.me
-// @version      2025-12-30
+// @version      2025-12-30_12-25
 // @description  Displays warning on cheated maps on TMX, based on the Cheated Map List (https://docs.google.com/spreadsheets/d/1fqmzFGPIFBlJuxlwnPJSh1nCTTxqWXtHtvP5OUxE4Ow)
 // @author       Pietagorh
 // @homepage     https://discord.gg/HRShWnzpK3

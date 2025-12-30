@@ -9,6 +9,8 @@
 // @match        https://tmnf.exchange/trackpackshow/*
 // @match        https://tmnf.exchange/trackshow/*
 // @icon         https://account.mania.exchange/img/logos/TMNF.png
+// @downloadURL  https://update.greasyfork.org/scripts/560758/TMXWarnCheatedMap.user.js
+// @updateURL    https://update.greasyfork.org/scripts/560758/TMXWarnCheatedMap.user.js
 // ==/UserScript==
 
 const SHEET_ID = '1fqmzFGPIFBlJuxlwnPJSh1nCTTxqWXtHtvP5OUxE4Ow';

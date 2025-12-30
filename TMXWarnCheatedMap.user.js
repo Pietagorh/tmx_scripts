@@ -48,11 +48,13 @@ async function trackshow(path, data) {
     warningBanner.className = 'alert';
     warningBanner.style = '--bs-alert-color: var(--bs-warning-text-emphasis); --bs-alert-bg: var(--bs-warning-bg-subtle); --bs-alert-border-color: var(--bs-warning-border-subtle); --bs-alert-link-color: var(--bs-warning-text-emphasis);'
 
+    // There's probably a cleaner way to do that lol
+    warningBanner.innerText += `${cheatedCategory}${(cheatedComment ? `: ${cheatedComment}` : '')}.`;
+    warningBanner.innerHTML = " This track was identified as invalid.<br>" + warningBanner.innerHTML;
+
     const warningSymbol = document.createElement('i');
     warningSymbol.className = `fas ${FA_WARNING_SYMBOL}`;
-    warningBanner.append(warningSymbol);
-
-    warningBanner.innerHTML += `This track was identified as invalid.<br>${cheatedCategory}` + (cheatedComment ? `: ${cheatedComment}` : '') + '.';
+    warningBanner.prepend(warningSymbol);
 
     document.getElementsByClassName("col-md-6")[0].prepend(warningBanner);
 }

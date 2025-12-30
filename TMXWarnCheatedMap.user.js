@@ -82,33 +82,41 @@ function waitForElement(selector) {
 }
 
 async function tracksearch(data) {
+    // If we don't, we might get overwritten
     await waitForElement('#searchLB > table > thead > tr > th.WindowTableHeader1-orderby');
 
     const searchTable = document.getElementById('searchLB').firstChild;
     const tableHead = searchTable.tHead.rows[0];
     const tableBody = searchTable.tBodies[0];
 
-    const newCollumnHeader = document.createElement('th');
-    newCollumnHeader.innerText = "Cheated?";
-    newCollumnHeader.width = '900';
-    tableHead.append(newCollumnHeader);
+    // Create new column
+    const newColumnHeader = document.createElement('th');
+    newColumnHeader.innerText = "Cheated?";
+    newColumnHeader.width = '900';
+    tableHead.append(newColumnHeader);
+    for (let i = 0; i < tableBody.rows.length; i++) {
+        const track = tableBody.rows[i];
+        const newCollumnCell = document.createElement('td');
+        track.append(newCollumnCell);
+    }
 
+    // Populate it
     data = await data;
     for (let i = 0; i < tableBody.rows.length; i++) {
         const track = tableBody.rows[i];
 
-        const newCollumnCell = document.createElement('td');
         const cheatedEntry = getMatchingCheated(parseInt(track.dataset.mapid), data);
         if (cheatedEntry) {
-            newCollumnCell.innerText += " " + cheatedEntry[0].v;
+            const cheatedCell = tableBody.rows[i].lastChild;
+            cheatedCell.innerText += " " + cheatedEntry[0].v;
 
             const warningSymbol = document.createElement('i');
             warningSymbol.className = `fas ${FA_WARNING_SYMBOL}`;
-            newCollumnCell.prepend(warningSymbol);
+            cheatedCell.prepend(warningSymbol);
         }
-        track.append(newCollumnCell);
     }
 
+    // Changing page doesn't reload the page so we wait for the table to get emptied
     await waitForElement('#searchLB > table:not(:has(> thead))');
     tracksearch(data);
 }

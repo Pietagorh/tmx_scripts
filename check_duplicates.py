@@ -11,7 +11,7 @@ ONLY_PRINT_UNFINISHED = True
 
 
 type UIdTable = dict[str, list[int]]
-type ResponseJson = {"More": bool, "Results": list[{"TrackId": int, "UId": str}]}
+type ResponseJson = {"More": bool, "Results": list[{"TrackId": int, "UId": str, "UploadedAt": str}]}
 
 
 def open_uid_table() -> (UIdTable, int | None):

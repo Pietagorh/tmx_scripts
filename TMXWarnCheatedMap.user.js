@@ -92,7 +92,7 @@ async function tracksearch(data) {
     // Create new column
     const newColumnHeader = document.createElement('th');
     newColumnHeader.innerText = "Cheated?";
-    newColumnHeader.width = '900';
+    newColumnHeader.width = '700';
     tableHead.append(newColumnHeader);
     for (let i = 0; i < tableBody.rows.length; i++) {
         const track = tableBody.rows[i];
@@ -104,6 +104,8 @@ async function tracksearch(data) {
     data = await data;
     for (let i = 0; i < tableBody.rows.length; i++) {
         const track = tableBody.rows[i];
+
+        if (track.className == 'SearchNoResultsContainer') break;
 
         const cheatedEntry = getMatchingCheated(parseInt(track.dataset.mapid), data);
         if (cheatedEntry) {

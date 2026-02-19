@@ -1,29 +1,45 @@
 // ==UserScript==
 // @name         TMXWarnCheatedMap
 // @namespace    mailto:pietagorhh@proton.me
-// @version      2025-12-30_17-08
+// @version      2026-02-19
 // @description  Displays warning on cheated maps on TMX, based on the Cheated Map List (https://docs.google.com/spreadsheets/d/1fqmzFGPIFBlJuxlwnPJSh1nCTTxqWXtHtvP5OUxE4Ow)
 // @author       Pietagorh
 // @homepage     https://discord.gg/HRShWnzpK3
 // @match        https://tmnf.exchange/tracksearch*
+// @match        https://tmuf.exchange/tracksearch*
+// @match        https://*.tm-exchange.com/tracksearch*
 // @match        https://tmnf.exchange/trackpackshow/*
+// @match        https://tmuf.exchange/trackpackshow/*
+// @match        https://*.tm-exchange.com/trackpackshow/*
 // @match        https://tmnf.exchange/trackshow/*
-// @icon         https://account.mania.exchange/img/logos/TMNF.png
+// @match        https://tmuf.exchange/trackshow/*
+// @match        https://*.tm-exchange.com/trackshow/*
+// @icon         https://mania.exchange/images/tmxlogo.png
 // @downloadURL  https://update.greasyfork.org/scripts/560758/TMXWarnCheatedMap.user.js
 // @updateURL    https://update.greasyfork.org/scripts/560758/TMXWarnCheatedMap.user.js
 // @license      AGPL-3.0
 // ==/UserScript==
 
 const SHEET_ID = '1fqmzFGPIFBlJuxlwnPJSh1nCTTxqWXtHtvP5OUxE4Ow';
-const GID = '0';
+const SHEET_PAGE_IDS = {
+    'https://tmnf.exchange'           : '605781157',
+    'https://tmuf.exchange'           : '2132753700',
+    'https://nations.tm-exchange.com' : '38022687',
+    'https://sunrise.tm-exchange.com' : '1438334892',
+    'https://original.tm-exchange.com': '1739598690',
+};
 
 const FA_WARNING_SYMBOL = 'fa-exclamation-triangle';
 
 const SHEETS_RESPONSE_HEADER = '/*O_o*/\ngoogle.visualization.Query.setResponse(';
 const SHEETS_RESPONSE_FOOTER = ');';
 
-async function getData() {
-    const result = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&tq&gid=${GID}`);
+function getPageId(origin) {
+    return SHEET_PAGE_IDS[origin];
+}
+
+async function getData(pageId) {
+    const result = await fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:json&tq&gid=${pageId}`);
     const cleaned = (await result.text()).slice(SHEETS_RESPONSE_HEADER.length, -SHEETS_RESPONSE_FOOTER.length);
     const json = JSON.parse(cleaned);
     return json.table.rows;
@@ -125,7 +141,8 @@ async function tracksearch(data) {
 
 (async function() {
     'use strict';
-    const data = getData();
+    const pageId = getPageId(window.origin);
+    const data = getData(pageId);
     const path = window.location.pathname.split('/').filter(p => p);
 
     path[0] === 'trackshow' ? trackshow(path, data) : tracksearch(data);
